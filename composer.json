@@ -1,6 +1,6 @@
 {
-    "name": "szemul/config",
-    "description": "Simple configuration engine supporting .env files and environment variables",
+    "name": "szemul/helper",
+    "description": "Collection of different helpers",
     "license": "MIT",
     "minimum-stability": "stable",
     "require": {
