@@ -5,7 +5,7 @@ namespace Szemul\Helper;
 
 class VarDumpHelper
 {
-    public function captureVarDumpToString(mixed ...$values): string
+    public function varDumpToString(mixed ...$values): string
     {
         ob_start();
 
@@ -16,6 +16,21 @@ class VarDumpHelper
             ob_end_clean();
 
             return $result;
+        }
+    }
+
+    public function varDumpToFile(\SplFileObject $file, mixed ...$values): void
+    {
+        ob_start(function (string $buffer) use ($file) {
+            $file->fwrite($buffer);
+
+            return '';
+        }, 1048576);
+
+        try {
+            var_dump(...$values);
+        } finally {
+            ob_end_flush();
         }
     }
 }
