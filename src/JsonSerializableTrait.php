@@ -33,7 +33,7 @@ trait JsonSerializableTrait
             } elseif ($value instanceof JsonSerializable) {
                 $array[$index] = $value->jsonSerialize();
             } elseif (is_array($value)) {
-                $array[$index] = $this->serializeArray($array);
+                $array[$index] = $this->serializeArray($value);
             }
         }
 
