@@ -11,15 +11,23 @@ use JsonSerializable;
 
 trait JsonSerializableTrait
 {
+    /** @return array<string,mixed> */
     public function jsonSerialize(): array
     {
         return $this->serializeArray(get_object_vars($this), $this->getIgnoredProperties());
     }
 
+    /**
+     * @param array<string,mixed> $array
+     * @param string[]            $ignoredIndexes
+     *
+     * @return array<string,mixed>
+     */
     protected function serializeArray(array $array, array $ignoredIndexes = []): array
     {
         foreach ($array as $index => $value) {
             if (in_array($index, $ignoredIndexes)) {
+                unset($array[$index]);
                 continue;
             }
 
@@ -40,12 +48,16 @@ trait JsonSerializableTrait
         return $array;
     }
 
-    /** @return string[] */
+    /**
+     * @return string[]
+     * @codeCoverageIgnore
+     */
     protected function getIgnoredProperties(): array
     {
         return [];
     }
 
+    /** @return array<string,mixed> */
     public function toArray(): array
     {
         return json_decode(json_encode($this), true);
