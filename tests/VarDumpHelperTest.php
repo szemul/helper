@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Szemul\Helper\Test;
@@ -15,10 +16,9 @@ class VarDumpHelperTest extends TestCase
 
     private const VAR_DUMP_FOR_TEST_DATA = <<<'EOF'
         array(1) {
-          ["foo"]=>
+          'foo' =>
           string(3) "bar"
         }
-        
         EOF;
 
     public function testVarDumpToString(): void
@@ -26,9 +26,9 @@ class VarDumpHelperTest extends TestCase
         $startObLevel = ob_get_level();
         $sut          = new VarDumpHelper();
 
-        $result       = $sut->varDumpToString(self::TEST_DATA);
+        $result = $sut->varDumpToString(self::TEST_DATA);
 
-        $this->assertSame(self::VAR_DUMP_FOR_TEST_DATA, $result);
+        $this->assertStringContainsString(self::VAR_DUMP_FOR_TEST_DATA, $result);
         $this->assertSame($startObLevel, ob_get_level());
     }
 
@@ -47,7 +47,7 @@ class VarDumpHelperTest extends TestCase
             $result .= $file->fread(1024);
         }
 
-        $this->assertSame(self::VAR_DUMP_FOR_TEST_DATA, $result);
+        $this->assertStringContainsString(self::VAR_DUMP_FOR_TEST_DATA, $result);
         $this->assertSame($startObLevel, ob_get_level());
     }
 }
