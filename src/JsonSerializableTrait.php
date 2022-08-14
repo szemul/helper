@@ -32,12 +32,11 @@ trait JsonSerializableTrait
             }
 
             if ($value instanceof CarbonInterface) {
-                $array[$index] = $value->toIso8601ZuluString();
+                $array[$index] = $this->serializeCarbon($value);
             } elseif ($value instanceof DateTimeImmutable) {
-                $array[$index] = $value->setTimezone(new DateTimeZone('UTC'))->format(DATE_ATOM);
+                $array[$index] = $this->serializeDateTime($value);
             } elseif ($value instanceof DateTime) {
-                $date          = clone $value;
-                $array[$index] = $date->setTimezone(new DateTimeZone('UTC'))->format(DATE_ATOM);
+                $array[$index] = $this->serializeDateTime($value);
             } elseif ($value instanceof JsonSerializable) {
                 $array[$index] = $value->jsonSerialize();
             } elseif (is_array($value)) {
@@ -46,6 +45,18 @@ trait JsonSerializableTrait
         }
 
         return $array;
+    }
+
+    protected function serializeCarbon(CarbonInterface $value): string
+    {
+        return $value->toIso8601ZuluString();
+    }
+
+    protected function serializeDateTime(DateTime|DateTimeImmutable $value): string
+    {
+        $date          = clone $value;
+
+        return $date->setTimezone(new DateTimeZone('UTC'))->format(DATE_ATOM);
     }
 
     /**
