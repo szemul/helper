@@ -22,7 +22,7 @@ class JsonSerializableTraitMock implements JsonSerializable
      * @param mixed[] $array
      */
     public function __construct(
-        private ?DateTime $date = null, // @phpstan-ignore-line
+        private ?DateTime $date = null,
         protected ?DateTimeImmutable $dateImmutable = null,
         public ?CarbonInterface $carbon = null,
         public ?JsonSerializable $jsonSerializable = null,

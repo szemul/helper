@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Szemul\Helper\Test;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Szemul\Helper\PhpStringHelper;
 
@@ -12,7 +13,7 @@ class PhpStringHelperTest extends TestCase
     /**
      * @return string[][]
      */
-    public function constantProvider(): array
+    public static function constantProvider(): array
     {
         return [
             ['word', 'WORD'],
@@ -25,9 +26,7 @@ class PhpStringHelperTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider constantProvider
-     */
+    #[DataProvider('constantProvider')]
     public function testConvertToConstantName(string $input, string $expectedResult): void
     {
         $result = $this->getSut()->convertToConstantName($input);
@@ -38,7 +37,7 @@ class PhpStringHelperTest extends TestCase
     /**
      * @return string[][]
      */
-    public function methodProvider(): array
+    public static function methodProvider(): array
     {
         return [
             ['word', 'word'],
@@ -51,9 +50,7 @@ class PhpStringHelperTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider methodProvider
-     */
+    #[DataProvider('methodProvider')]
     public function testConvertToMethodName(string $input, string $expectedResult): void
     {
         $result = $this->getSut()->convertToMethodOrVariableName($input);
@@ -64,7 +61,7 @@ class PhpStringHelperTest extends TestCase
     /**
      * @return string[][]
      */
-    public function classProvider(): array
+    public static function classProvider(): array
     {
         return [
             ['word', 'Word'],
@@ -77,9 +74,7 @@ class PhpStringHelperTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider classProvider
-     */
+    #[DataProvider('classProvider')]
     public function testConvertToClassName(string $input, string $expectedResult): void
     {
         $result = $this->getSut()->convertToClassName($input);
